@@ -1,0 +1,106 @@
+
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">R version 3.6.1 (2019-07-05)</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;"><br/></span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">attached base packages:</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[1] stats&nbsp; &nbsp;&nbsp; graphics&nbsp; grDevices utils&nbsp; &nbsp;&nbsp; datasets&nbsp; methods&nbsp;&nbsp; base&nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;"><br/></span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">other attached packages:</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">&nbsp;[1] cmprsk_2.2-10&nbsp; &nbsp;&nbsp; jsonlite_1.7.2&nbsp; &nbsp; Hmisc_4.4-2&nbsp; &nbsp; &nbsp;&nbsp; Formula_1.2-4&nbsp; &nbsp;&nbsp; survival_3.2-7&nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">&nbsp;[6] lattice_0.20-38&nbsp;&nbsp; Gmisc_1.11.0&nbsp; &nbsp; &nbsp; htmlTable_2.1.0&nbsp;&nbsp; Rcpp_1.0.5&nbsp; &nbsp; &nbsp; &nbsp; cowplot_1.1.0&nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[11] survminer_0.4.8&nbsp;&nbsp; ggpubr_0.4.0&nbsp; &nbsp; &nbsp; magrittr_2.0.1&nbsp; &nbsp; forcats_0.5.0&nbsp; &nbsp;&nbsp; stringr_1.4.0&nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[16] dplyr_1.0.2&nbsp; &nbsp; &nbsp;&nbsp; purrr_0.3.4&nbsp; &nbsp; &nbsp;&nbsp; readr_1.4.0&nbsp; &nbsp; &nbsp;&nbsp; tidyr_1.1.2&nbsp; &nbsp; &nbsp;&nbsp; tibble_3.0.4&nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[21] tidyverse_1.3.0&nbsp;&nbsp; ggplot2_3.3.2&nbsp; &nbsp;&nbsp; shinythemes_1.1.2 shiny_1.5.0&nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;"><br/></span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">loaded via a namespace (and not attached):</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">&nbsp;[1] nlme_3.1-140&nbsp; &nbsp; &nbsp; &nbsp; fs_1.5.0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; lubridate_1.7.9.2&nbsp;&nbsp; RColorBrewer_1.1-2&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">&nbsp;[5] httr_1.4.2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ggsci_2.9&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; tools_3.6.1&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; backports_1.2.0&nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">&nbsp;[9] R6_2.5.0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rpart_4.1-15&nbsp; &nbsp; &nbsp; &nbsp; mgcv_1.8-28&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; DBI_1.1.0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[13] colorspace_2.0-0&nbsp; &nbsp; nnet_7.3-12&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; withr_2.3.0&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; tidyselect_1.1.0&nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[17] gridExtra_2.3&nbsp; &nbsp; &nbsp;&nbsp; curl_4.3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; compiler_3.6.1&nbsp; &nbsp; &nbsp; cli_2.2.0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[21] rvest_0.3.6&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; xml2_1.3.2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; labeling_0.4.2&nbsp; &nbsp; &nbsp; scales_1.1.1&nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[25] checkmate_2.0.0&nbsp; &nbsp;&nbsp; survMisc_0.5.5&nbsp; &nbsp; &nbsp; digest_0.6.27&nbsp; &nbsp; &nbsp;&nbsp; foreign_0.8-71&nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[29] rmarkdown_2.5&nbsp; &nbsp; &nbsp;&nbsp; rio_0.5.16&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jpeg_0.1-8.1&nbsp; &nbsp; &nbsp; &nbsp; base64enc_0.1-3&nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[33] pkgconfig_2.0.3&nbsp; &nbsp;&nbsp; htmltools_0.5.0&nbsp; &nbsp;&nbsp; dbplyr_2.0.0&nbsp; &nbsp; &nbsp; &nbsp; fastmap_1.0.1&nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[37] htmlwidgets_1.5.3&nbsp;&nbsp; rlang_0.4.9&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; readxl_1.3.1&nbsp; &nbsp; &nbsp; &nbsp; rstudioapi_0.13&nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[41] farver_2.0.3&nbsp; &nbsp; &nbsp; &nbsp; generics_0.1.0&nbsp; &nbsp; &nbsp; zoo_1.8-8&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; zip_2.1.1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[45] car_3.0-10&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Matrix_1.2-17&nbsp; &nbsp; &nbsp;&nbsp; munsell_0.5.0&nbsp; &nbsp; &nbsp;&nbsp; fansi_0.4.1&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[49] abind_1.4-5&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; lifecycle_0.2.0&nbsp; &nbsp;&nbsp; yaml_2.2.1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stringi_1.5.3&nbsp; &nbsp; &nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[53] carData_3.0-4&nbsp; &nbsp; &nbsp;&nbsp; grid_3.6.1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; promises_1.1.1&nbsp; &nbsp; &nbsp; crayon_1.3.4&nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[57] haven_2.3.1&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; splines_3.6.1&nbsp; &nbsp; &nbsp;&nbsp; hms_0.5.3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; knitr_1.30&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[61] pillar_1.4.7&nbsp; &nbsp; &nbsp; &nbsp; ggsignif_0.6.0&nbsp; &nbsp; &nbsp; reprex_0.3.0&nbsp; &nbsp; &nbsp; &nbsp; XML_3.99-0.3&nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[65] glue_1.4.2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; evaluate_0.14&nbsp; &nbsp; &nbsp;&nbsp; latticeExtra_0.6-29 data.table_1.13.4&nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[69] modelr_0.1.8&nbsp; &nbsp; &nbsp; &nbsp; png_0.1-7&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; vctrs_0.3.5&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; httpuv_1.5.4&nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[73] cellranger_1.1.0&nbsp; &nbsp; gtable_0.3.0&nbsp; &nbsp; &nbsp; &nbsp; km.ci_0.5-2&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; assertthat_0.2.1&nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[77] xfun_0.19&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; openxlsx_4.2.3&nbsp; &nbsp; &nbsp; mime_0.9&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; xtable_1.8-4&nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[81] broom_0.7.2&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; rstatix_0.6.0&nbsp; &nbsp; &nbsp;&nbsp; later_1.1.0.1&nbsp; &nbsp; &nbsp;&nbsp; forestplot_1.10.1&nbsp;&nbsp;</span>
+</div>
+<div>
+    <span data-wiz-span="data-wiz-span" style="font-family: &quot;Times New Roman&quot;;">[85] tinytex_0.28&nbsp; &nbsp; &nbsp; &nbsp; KMsurv_0.1-5&nbsp; &nbsp; &nbsp; &nbsp; cluster_2.1.0&nbsp; &nbsp; &nbsp;&nbsp; ellipsis_0.3.1&nbsp; &nbsp;</span>
+</div>
