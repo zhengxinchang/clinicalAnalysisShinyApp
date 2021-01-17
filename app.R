@@ -59,7 +59,11 @@ if (!suppressWarnings({
 })) {
   print("Load Package shinyWidgets Failed")
 }
-
+if (!suppressWarnings({
+  require(waiter)
+})) {
+  print("Load Package shinyWidgets Failed")
+}
 
 htmlTable::setHtmlTableTheme(css.rgroup = "")
 # supress all warnings information
@@ -71,27 +75,31 @@ source("./helper_func.r", encoding = "utf-8")
 source("./constant_vars.r", encoding = "utf-8")
 
 
-# get data
-data_list <- data_prepare()
-unified_data <- data_list$unified_data
-series_data_long <- data_list$series_data_long
-gene_mutation <- data_list$gene_mutations
+
 
 
 # SERVER -----------------------------------
 
 server <- function(input, output, session) {
+  print(paste("Shiny App Start ... time: ", date(), sep = " "))
   
   # Server 端逻辑
   # 首先根据URL中传递的参数对患者进行筛选 ServerFuncSelectPatients.r
   # 之后生成reative事件 ServerFuncReactive.r
   # 最后进行渲染 ServerFuncRender.r
-  
-  
-  print(paste("Shiny App Start ... time: ", date(), sep = " "))
-  
+
+  # get data
+  data_list <- data_prepare()
+  unified_data <- data_list$unified_data
+  series_data_long <- data_list$series_data_long
+  gene_mutation <- data_list$gene_mutations
   # 读取所有的患者，在Shiny中进行筛选
+  
   source("./ServerFuncSelectPatients.r",local = T,encoding = "utf-8")
+  
+  # Slider UI渲染  
+  # source("./ServerFuncSliderInputUI.r",local = T,encoding = "utf-8")
+  
   
   # 隐藏选项卡
   hideTab(inputId = "nav", target = "结果")
@@ -102,13 +110,14 @@ server <- function(input, output, session) {
   # 分别生成reactive模式
   source("./ServerFuncReactive.r",local = T,encoding = "utf-8")
   
+  waiter_hide()
 }
 
 # UI -----------------------------------
 
 ui <-
   shiny::navbarPage(
-    "临床数据实时分析系统",
+    title = "临床数据实时分析系统",
     theme = shinytheme("flatly"),
     fluid = FALSE,
     id = "nav",
@@ -117,6 +126,8 @@ ui <-
     tabPanel(
       "选择治疗方案和配色",
       fixedPage(
+        use_waiter(),
+        waiter_show_on_load(html = spin_fading_circles()),
         tags$head(tags$script(src = "message-handler.js")),
         verticalLayout(
           wellPanel(
@@ -346,13 +357,17 @@ ui <-
                 tabPanel(
                   "Age",
                   wellPanel(
-                    sliderInput(
-                      "Surv_Age_bins",
-                      label = "年龄分组",
-                      min =  min(na.omit(unified_data$age)),
-                      max = max(na.omit(unified_data$age)),
-                      value = median(na.omit(unified_data$age))
-                    ),
+                    # sliderInput(
+                    #   "Surv_Age_bins",
+                    #   label = "年龄分组",
+                    #   min =  min(na.omit(subdat$age)),
+                    #   max = max(na.omit(subdat$age)),
+                    #   value = median(na.omit(subdat$age))
+                    # ),
+                    tags$div(
+                      id ="SliderInputAge"
+                      ),
+                    # uiOutput("SliderInputAge"),
                     actionButton(
                       inputId = "button_Surv_Age",
                       label = "Re-Analyze",
@@ -370,12 +385,16 @@ ui <-
                 tabPanel(
                   "WBC",
                   wellPanel(
-                    sliderInput(
-                      "Surv_Wbc_bins",
-                      label = "White Blood Cell Count分组",
-                      min =  min(na.omit(unified_data$wbc)),
-                      max = max(na.omit(unified_data$wbc)),
-                      value = median(na.omit(unified_data$wbc))
+                    # sliderInput(
+                    #   "Surv_Wbc_bins",
+                    #   label = "White Blood Cell Count分组",
+                    #   min =  min(na.omit(unified_data$wbc)),
+                    #   max = max(na.omit(unified_data$wbc)),
+                    #   value = median(na.omit(unified_data$wbc))
+                    # ),
+                    tags$div(
+                      id =
+                        "SliderInputWbc"
                     ),
                     actionButton(
                       inputId = "button_Surv_Wbc",
@@ -395,12 +414,16 @@ ui <-
                 tabPanel(
                   "ANC",
                   wellPanel(
-                    sliderInput(
-                      "Surv_Anc_bins",
-                      label = "Absolute Neutrophil Count分组",
-                      min =  min(na.omit(unified_data$anc)),
-                      max = max(na.omit(unified_data$anc)),
-                      value = median(na.omit(unified_data$anc))
+                    # sliderInput(
+                    #   "Surv_Anc_bins",
+                    #   label = "Absolute Neutrophil Count分组",
+                    #   min =  min(na.omit(unified_data$anc)),
+                    #   max = max(na.omit(unified_data$anc)),
+                    #   value = median(na.omit(unified_data$anc))
+                    # ),
+                    tags$div(
+                      id =
+                        "SliderInputAnc"
                     ),
                     actionButton(
                       inputId = "button_Surv_Anc",
@@ -420,12 +443,16 @@ ui <-
                 tabPanel(
                   "PLT",
                   wellPanel(
-                    sliderInput(
-                      "Surv_Plt_bins",
-                      label = "Platete分组",
-                      min =  min(na.omit(unified_data$plt)),
-                      max = max(na.omit(unified_data$plt)),
-                      value = median(na.omit(unified_data$plt))
+                    # sliderInput(
+                    #   "Surv_Plt_bins",
+                    #   label = "Platete分组",
+                    #   min =  min(na.omit(unified_data$plt)),
+                    #   max = max(na.omit(unified_data$plt)),
+                    #   value = median(na.omit(unified_data$plt))
+                    # ),
+                    tags$div(
+                      id =
+                        "SliderInputPlt"
                     ),
                     actionButton(
                       inputId = "button_Surv_Plt",
@@ -445,12 +472,16 @@ ui <-
                 tabPanel(
                   "HB",
                   wellPanel(
-                    sliderInput(
-                      "Surv_Hb_bins",
-                      label = "Hemoglobin分组",
-                      min =  min(na.omit(unified_data$hb)),
-                      max = max(na.omit(unified_data$hb)),
-                      value = median(na.omit(unified_data$hb))
+                    # sliderInput(
+                    #   "Surv_Hb_bins",
+                    #   label = "Hemoglobin分组",
+                    #   min =  min(na.omit(unified_data$hb)),
+                    #   max = max(na.omit(unified_data$hb)),
+                    #   value = median(na.omit(unified_data$hb))
+                    # ),
+                    tags$div(
+                      id =
+                        "SliderInputHb"
                     ),
                     actionButton(
                       inputId = "button_Surv_Hb",

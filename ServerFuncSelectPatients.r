@@ -57,7 +57,7 @@ observe({
       justified = F,
       checkIcon = list(yes = icon("ok",
         lib = "glyphicon"
-      )),
+      ))
     )
   })
 
@@ -70,4 +70,20 @@ observe({
       align = "c",
       width = "100%"
     )
+  
+  # output$SliderInputAge<- renderUI({
+  #   sliderInput(
+  #     "Surv_Age_bins",
+  #     label = "年龄分组",
+  #     min =  min(na.omit(selectPtsData$age)),
+  #     max = max(na.omit(selectPtsData$age)),
+  #     value = median(na.omit(selectPtsData$age))
+  #   )
+  # })
+
+  
+  
 })
+
+
+

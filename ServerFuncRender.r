@@ -15,6 +15,10 @@ observeEvent(input$treatGroup_analysis, {
       min = 0,
       max = 15,
       expr = {
+
+        # 为后续的动态生成 Survival ~ 连续变量的 的SliderInput准备数据        
+        subdat<- reactive_subdata()
+
         # 渲染概览模块
         {
           ## 绘制table1
@@ -106,18 +110,33 @@ observeEvent(input$treatGroup_analysis, {
           ## survival mutation
           Render_Surv_plot("surv_genemut_div", input$treatGroup, reactive_genemut_survival(), output)
 
+          
+          # age
+          genSurvInputSlider("SliderInputAge","Surv_Age_bins","年龄分组",subdat$age)
           ## survival age
           Render_Surv_plot("surv_age_div", input$treatGroup, reactive_age_survival(), output)
 
+          
+          # wbc
+          genSurvInputSlider("SliderInputWbc","Surv_Wbc_bins","White Blood Cell Count分组",subdat$wbc)
           ## survival wbc
           Render_Surv_plot("surv_wbc_div", input$treatGroup, reactive_wbc_survival(), output)
 
+          
+          # anc
+          genSurvInputSlider("SliderInputAnc","Surv_Anc_bins","Absolute Neutrophil Count分组",subdat$anc)
           ## survival anc
           Render_Surv_plot("surv_anc_div", input$treatGroup, reactive_anc_survival(), output)
 
+          
+          #plt
+          genSurvInputSlider("SliderInputPlt","Surv_Plt_bins","Platete分组",subdat$plt)
           ## survival plt
           Render_Surv_plot("surv_plt_div", input$treatGroup, reactive_plt_survival(), output)
           
+          
+          #hb
+          genSurvInputSlider("SliderInputHb","Surv_Hb_bins","Hemoglobin分组",subdat$hb)
           ## survival hb
           Render_Surv_plot("surv_hb_div", input$treatGroup, reactive_hb_survival(), output)
         }

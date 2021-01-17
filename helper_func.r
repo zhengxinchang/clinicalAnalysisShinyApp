@@ -917,3 +917,38 @@ genInductionPlot <- function(subdat, VarName, treatGroup, mypalette) {
   )
 
 }
+
+
+
+#' Title
+#'
+#' @param ID 
+#' @param SliderID 
+#' @param label 
+#' @param datamin 
+#' @param datamax 
+#' @param datamidvalue 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+genSurvInputSlider<-function(ID,SliderID,label,data){
+  sharp_ID = paste0("#",ID)
+  removeUI(
+    selector = paste0( sharp_ID, " >*"),
+    multiple = T
+  )
+  insertUI(
+    selector = sharp_ID,
+    where = "afterEnd",
+    ui = sliderInput(
+      SliderID,
+      label = label,
+      min =  min(na.omit(data)),
+      max = max(na.omit(data)),
+      value = median(na.omit(data))
+    )
+  )
+  
+}

@@ -434,19 +434,110 @@ reactive_cost <- reactive({
 reactive_routine_blood <-
   reactive({
     series_data_long <- reactive_series_data_long()
-    series_data_long %>%
-      ggplot() +
-      geom_line(aes(
-        x = Series_nth_day,
-        y = value,
-        color = factor(Treatment),
-        group = factor(Series_patient_id)
-      )) +
-      facet_grid(Params ~ Treatment, scales = "free") +
-      theme_bw() +
-      labs(color = "Treatment") +
-      xlab(label = "Days") +
-      stat_smooth(aes(x = Series_nth_day, y = value))
+    # series_data_long %>%
+    #   ggplot() +
+    #   geom_line(aes(
+    #     x = Series_nth_day,
+    #     y = value,
+    #     color = factor(Treatment),
+    #     group = factor(Series_patient_id)
+    #   )) +
+    #   facet_grid(Params ~ Treatment, scales = "free") +
+    #   theme_bw() +
+    #   labs(color = "Treatment") +
+    #   xlab(label = "Days") +
+    #   stat_smooth(aes(x = Series_nth_day, y = value))
+    series_data_long <- series_data_long %>% head(200)
+    plotlist<- list()
+    
+    uniq_treatment<- series_data_long$Treatment %>% unique() %>% na.omit()
+    
+    for (treat in uniq_treatment){
+      
+      sub_plot_plt<-tryCatch({
+         series_data_long[which(series_data_long$Treatment == treat),] %>% 
+          filter(Params == "Series_plt") %>%
+          ggplot() +
+          geom_line(aes(x = Series_nth_day,y = value,group=factor(Series_patient_id)),color="#FF8000") +
+          theme_bw() +
+          labs(color = "Treatment") +
+          xlab(label = "Days") +
+          ggtitle(label = "Palette(10^9/L)") +
+          stat_smooth(aes(x = Series_nth_day, y = value))
+
+      },
+      error=function(e){
+        ggplot()
+      },
+      warning=function(w){
+        ggplot()
+      })
+      
+      sub_plot_anc<-tryCatch({
+        series_data_long[which(series_data_long$Treatment == treat),] %>%
+          filter(Params == "Series_anc") %>%
+          ggplot() +
+          geom_line(aes(x = Series_nth_day,y = value,group=factor(Series_patient_id)),color="#228B22") +
+          theme_bw() +
+          labs(color = "Treatment") +
+          xlab(label = "Days") +
+          ggtitle(label = "Absolute Neutrophil Count(10^9/L)") +
+          stat_smooth(aes(x = Series_nth_day, y = value))
+
+      },
+      error=function(e){
+        ggplot()
+      },
+      warning=function(w){
+        ggplot()
+      })
+    
+      sub_plot_wbc<-tryCatch({
+         series_data_long[which(series_data_long$Treatment == treat),] %>%
+          filter(Params == "Series_wbc") %>%
+          ggplot() +
+          geom_line(aes(x = Series_nth_day,y = value,group=factor(Series_patient_id)),color="#DA70D6") +
+          theme_bw() +
+          labs(color = "Treatment") +
+          xlab(label = "Days") +
+          ggtitle(label = "White Blood Cell Count(10^9/L)") +
+          stat_smooth(aes(x = Series_nth_day, y = value))
+
+      },
+      error=function(e){
+        ggplot()
+      },
+      warning=function(w){
+        ggplot()
+      })
+      sub_plot_hb<-tryCatch({
+        series_data_long[which(series_data_long$Treatment == treat),] %>%
+          filter(Params == "Series_hb") %>%
+          ggplot() +
+          geom_line(aes(x = Series_nth_day,y = value,group=factor(Series_patient_id)),color="#B03060") +
+          theme_bw() +
+          labs(color = "Treatment") +
+          xlab(label = "Days") +
+          ggtitle(label = "hemoglobin(g/L)") +
+          stat_smooth(aes(x = Series_nth_day, y = value))
+
+      },
+      error=function(e){
+        ggplot()
+      },
+      warning=function(w){
+        ggplot()
+      })
+    
+      plotlist[[treat]] <-cowplot::plot_grid(ggplot() + labs(title = treat ) + theme_void(),
+        cowplot::plot_grid(sub_plot_wbc,sub_plot_anc,sub_plot_plt,sub_plot_hb,nrow=1),
+        ncol=1,rel_heights = c(0.1,0.9))
+      
+    }
+    
+    plot_grid(plotlist = plotlist,ncol=1)
+    
+    
   })
 
 
