@@ -447,30 +447,31 @@ reactive_routine_blood <-
     #   labs(color = "Treatment") +
     #   xlab(label = "Days") +
     #   stat_smooth(aes(x = Series_nth_day, y = value))
-    series_data_long <- series_data_long %>% head(200)
-    plotlist<- list()
+    plist<- list()
     
-    uniq_treatment<- series_data_long$Treatment %>% unique() %>% na.omit()
+    uniq_treatment<- series_data_long$Treatment %>% unique() %>% na.omit() %>% as.character()
     
     for (treat in uniq_treatment){
       
       sub_plot_plt<-tryCatch({
-         series_data_long[which(series_data_long$Treatment == treat),] %>% 
+         series_data_long[which(series_data_long$Treatment == treat),] %>%
           filter(Params == "Series_plt") %>%
           ggplot() +
           geom_line(aes(x = Series_nth_day,y = value,group=factor(Series_patient_id)),color="#FF8000") +
           theme_bw() +
           labs(color = "Treatment") +
           xlab(label = "Days") +
-          ggtitle(label = "Palette(10^9/L)") +
+          ggtitle(label = "Platelet(10^9/L)") +
           stat_smooth(aes(x = Series_nth_day, y = value))
 
       },
       error=function(e){
-        ggplot()
+        print("Routine_plt_ggplot_error")
+        sub_plot_plt<-ggplot()
       },
       warning=function(w){
-        ggplot()
+        print("Routine_plt_ggplot_warning")
+        sub_plot_plt<- ggplot()
       })
       
       sub_plot_anc<-tryCatch({
@@ -486,10 +487,12 @@ reactive_routine_blood <-
 
       },
       error=function(e){
-        ggplot()
+        print("Routine_anc_ggplot_error")
+        sub_plot_anc<-ggplot()
       },
       warning=function(w){
-        ggplot()
+        print("Routine_anc_ggplot_warning")
+        sub_plot_anc<-ggplot()
       })
     
       sub_plot_wbc<-tryCatch({
@@ -505,11 +508,14 @@ reactive_routine_blood <-
 
       },
       error=function(e){
-        ggplot()
+        print("Routine_wbc_ggplot_error")
+        sub_plot_wbc <-ggplot()
       },
       warning=function(w){
-        ggplot()
+        print("Routine_wbc_ggplot_warning")
+        sub_plot_wbc<- ggplot()
       })
+      
       sub_plot_hb<-tryCatch({
         series_data_long[which(series_data_long$Treatment == treat),] %>%
           filter(Params == "Series_hb") %>%
@@ -523,19 +529,32 @@ reactive_routine_blood <-
 
       },
       error=function(e){
-        ggplot()
+        print("Routine_hb_ggplot_error")
+        sub_plot_hb<- ggplot()
       },
       warning=function(w){
-        ggplot()
+        print("Routine_hb_ggplot_warning")
+        sub_plot_hb <- ggplot()
       })
     
-      plotlist[[treat]] <-cowplot::plot_grid(ggplot() + labs(title = treat ) + theme_void(),
-        cowplot::plot_grid(sub_plot_wbc,sub_plot_anc,sub_plot_plt,sub_plot_hb,nrow=1),
-        ncol=1,rel_heights = c(0.1,0.9))
       
+      tryCatch(expr = {
+        plist[[treat]] <-cowplot::plot_grid(ggplot() + labs(title = treat ) + theme_void(),
+                                            cowplot::plot_grid(sub_plot_wbc,sub_plot_anc,sub_plot_plt,sub_plot_hb,nrow=1),
+                                            ncol=1,rel_heights = c(0.1,0.9))
+        
+      },error=function(e){
+      
+        plist[[treat]] <-ggplot()
+    
+      },warning=function(w){
+        plist[[treat]] <-ggplot()
+      })
+    # print()
     }
     
-    plot_grid(plotlist = plotlist,ncol=1)
+    # print(plist)
+    plot_grid(plotlist = plist,ncol=1)
     
     
   })

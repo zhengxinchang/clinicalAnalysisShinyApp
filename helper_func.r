@@ -195,6 +195,7 @@ createDynamicTableRow <-
     for (i in seq(1, numofCols)) {
       id <- paste(idPrefix, treatGroup[i], sep = "_")
       id_tag <- paste(id, "Tag", sep = "_")
+      id_footerLine <- paste(id, "line", sep = "_")
       dynamic_list[[id_tag]] <- tags$h3(treatGroup[i])
       dynamic_list[[id]] <-
         uiOutput(
@@ -202,6 +203,8 @@ createDynamicTableRow <-
           inline = inline,
           class = "subRowTable"
         )
+      dynamic_list[[id_footerLine]] <- hr()
+      
     }
     return(dynamic_list)
   }

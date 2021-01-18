@@ -130,7 +130,7 @@ observeEvent(input$treatGroup_analysis, {
 
           
           #plt
-          genSurvInputSlider("SliderInputPlt","Surv_Plt_bins","Platete分组",subdat$plt)
+          genSurvInputSlider("SliderInputPlt","Surv_Plt_bins","Platelet分组",subdat$plt)
           ## survival plt
           Render_Surv_plot("surv_plt_div", input$treatGroup, reactive_plt_survival(), output)
           

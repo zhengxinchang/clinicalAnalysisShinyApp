@@ -75,9 +75,6 @@ source("./helper_func.r", encoding = "utf-8")
 source("./constant_vars.r", encoding = "utf-8")
 
 
-
-
-
 # SERVER -----------------------------------
 
 server <- function(input, output, session) {
@@ -88,17 +85,13 @@ server <- function(input, output, session) {
   # 之后生成reative事件 ServerFuncReactive.r
   # 最后进行渲染 ServerFuncRender.r
 
-  # get data
+  # get data 放在这里，会让shiny页面立刻弹出，配合Waiter 包，实现先弹出，后等待
   data_list <- data_prepare()
   unified_data <- data_list$unified_data
   series_data_long <- data_list$series_data_long
   gene_mutation <- data_list$gene_mutations
   # 读取所有的患者，在Shiny中进行筛选
-  
   source("./ServerFuncSelectPatients.r",local = T,encoding = "utf-8")
-  
-  # Slider UI渲染  
-  # source("./ServerFuncSliderInputUI.r",local = T,encoding = "utf-8")
   
   
   # 隐藏选项卡
@@ -200,16 +193,19 @@ ui <-
                     htmlOutput("costs", inline = T),
                     width = 12
                   )
-                ),
-                tabPanel(
-                  "血常规时序数据展示",
-
-                  mainPanel(
-                    tags$h3("治疗过程中血常规数据时序展示"),
-                    plotOutput("RoutineBlood", height = "1000px"),
-                    width = 12
-                  )
                 )
+                # ,
+                # tabPanel(
+                #   "血常规时序数据展示",
+                # 
+                #   mainPanel(
+                #     tags$h3("治疗过程中血常规数据时序展示"),
+                #     plotOutput("RoutineBlood", height = "1000px"),
+                #     width = 12
+                #   )
+                #   
+                #   
+                # )
               )
             ),
             verticalTabPanel(
