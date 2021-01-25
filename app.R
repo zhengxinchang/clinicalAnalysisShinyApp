@@ -103,6 +103,10 @@ server <- function(input, output, session) {
   # 分别生成reactive模式
   source("./ServerFuncReactive.r",local = T,encoding = "utf-8")
   
+  
+  #下载功能
+  source("./ServerFuncDownload.r",local = T,encoding = "utf-8")
+  
   waiter_hide()
 }
 
@@ -122,6 +126,7 @@ ui <-
         use_waiter(),
         waiter_show_on_load(html = spin_fading_circles()),
         tags$head(tags$script(src = "message-handler.js")),
+        tags$style(type = "text/css", HTML(".download_css {float: right;}")),
         verticalLayout(
           wellPanel(
             style = "background-color: #FFFFFF;border-style:solid;border-width:2px;border-color:#F5F5F5;",
@@ -152,17 +157,24 @@ ui <-
             contentWidth = 11,
             verticalTabPanel(
               "概览",
-              tags$style(type = "text/css", HTML("#treatGroup1_downloads {float: right;}")),
-              actionButton(
-                inputId = "treatGroup1_downloads",
-                label = "Download",
-                width = "10%"
-              ),
+              # tags$style(type = "text/css", HTML("#treatGroup1_downloads {float: right;}")),
+              # actionButton(
+              #   inputId = "treatGroup1_downloads",
+              #   label = "Download",
+              #   width = "10%"
+              # ),
               tabsetPanel(
                 tabPanel("患者基线数据概览",
                   width = "100%",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "baseline_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("患者基线特征"),
+                    
                     htmlOutput("Table1", inline = T),
                     width = 12
                   )
@@ -170,6 +182,12 @@ ui <-
                 tabPanel(
                   "临床疗效",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "outcome_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("诱导缓解疗程"),
                     htmlOutput("short_outcome", inline = T),
                     tags$h3("长期生存数据"),
@@ -180,6 +198,12 @@ ui <-
                 tabPanel(
                   "复发/死亡/移植",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "adverse_event_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("死亡、复发、骨髓移植"),
                     htmlOutput("deathrelapsetransplant", inline = T),
                     width = 12
@@ -188,6 +212,12 @@ ui <-
                 tabPanel(
                   "副作用与花费",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "sideeffects_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("副作用与花费"),
                     htmlOutput("sideeffect", inline = T),
                     htmlOutput("costs", inline = T),
@@ -210,16 +240,17 @@ ui <-
             ),
             verticalTabPanel(
               "临床因素~诱导缓解疗效",
-              tags$style(type = "text/css", HTML("#treatGroup1_downloads {float: right;}")),
-              actionButton(
-                inputId = "treatGroup1_downloads",
-                label = "Download",
-                width = "10%"
-              ),
+
               tabsetPanel(
                 tabPanel(
                   "Sex",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "sex_indction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("性别与诱导缓解疗效的关系"),
                     fixedRow(tags$div(
                       id =
@@ -235,6 +266,12 @@ ui <-
                 tabPanel(
                   "Age",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "age_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("年龄与诱导缓解疗效的关系"),
                     tags$div(
                       id =
@@ -246,6 +283,12 @@ ui <-
                 tabPanel(
                   "WBC",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "wbc_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("White Blood Cell Count与诱导缓解疗效的关系"),
                     tags$div(
                       id =
@@ -257,6 +300,12 @@ ui <-
                 tabPanel(
                   "ANC",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "anc_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Absolute Neutrophil Count与诱导缓解疗效的关系"),
                     tags$div(
                       id =
@@ -268,6 +317,12 @@ ui <-
                 tabPanel(
                   "PLT",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "plt_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Platelet与诱导缓解疗效的关系"),
                     tags$div(
                       id =
@@ -279,6 +334,12 @@ ui <-
                 tabPanel(
                   "HB",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "hb_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Hemoglobin与诱导缓解疗效的关系"),
                     tags$div(
                       id =
@@ -290,6 +351,12 @@ ui <-
                 tabPanel(
                   "Risk Group",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "risk_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("AML 危险度与诱导缓解疗效的关系"),
                     fixedRow(tags$div(
                       id =
@@ -305,6 +372,12 @@ ui <-
                 tabPanel(
                   "FAB Classification",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "fab_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("FAB分型与诱导缓解疗效的关系"),
                     fixedRow(tags$div(
                       id =
@@ -320,6 +393,12 @@ ui <-
                 tabPanel(
                   "Gene Mutation",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "mut_induction_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     fixedRow(tags$div(id = "ind1_GeneMut_div")),
                     fixedRow(tags$div(
                       id =
@@ -332,16 +411,22 @@ ui <-
             ),
             verticalTabPanel(
               "临床因素~长期生存",
-              tags$style(type = "text/css", HTML("#treatGroup1_downloads {float: right;}")),
-              actionButton(
-                inputId = "treatGroup1_downloads",
-                label = "Download",
-                width = "10%"
-              ),
+              # tags$style(type = "text/css", HTML("#treatGroup1_downloads {float: right;}")),
+              # actionButton(
+              #   inputId = "treatGroup1_downloads",
+              #   label = "Download",
+              #   width = "10%"
+              # ),
               tabsetPanel(
                 tabPanel(
                   "Sex",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "sex_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("性别与长期生存的关系"),
                     tags$div(
                       id =
@@ -370,7 +455,14 @@ ui <-
                       width = "100%"
                     )
                   ),
-                  mainPanel(tags$h3("年龄与长期生存的关系"),
+                  mainPanel(
+                    downloadLink(
+                      outputId   = "age_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
+                    tags$h3("年龄与长期生存的关系"),
                     tags$div(
                       id =
                         "surv_age_div"
@@ -399,6 +491,12 @@ ui <-
                     )
                   ),
                   mainPanel(
+                    downloadLink(
+                      outputId   = "wbc_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("White Blood Cell Count与长期生存的关系"),
                     tags$div(
                       id =
@@ -428,6 +526,12 @@ ui <-
                     )
                   ),
                   mainPanel(
+                    downloadLink(
+                      outputId   = "anc_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Absolute Neutrophil Count与长期生存的关系"),
                     tags$div(
                       id =
@@ -457,6 +561,12 @@ ui <-
                     )
                   ),
                   mainPanel(
+                    downloadLink(
+                      outputId   = "plt_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Platelet与长期生存的关系"),
                     tags$div(
                       id =
@@ -486,6 +596,12 @@ ui <-
                     )
                   ),
                   mainPanel(
+                    downloadLink(
+                      outputId   = "hb_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("Hemoglobin与长期生存的关系"),
                     tags$div(
                       id =
@@ -497,6 +613,12 @@ ui <-
                 tabPanel(
                   "Risk Group",
                   mainPanel(
+                    downloadLink(
+                      outputId   = "risk_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("AML 危险度与长期生存的关系"),
                     tags$div(
                       id =
@@ -509,6 +631,12 @@ ui <-
                   "FAB Classification",
 
                   mainPanel(
+                    downloadLink(
+                      outputId   = "fab_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("FAB分型与长期生存的关系"),
                     tags$div(
                       id =
@@ -540,6 +668,12 @@ ui <-
                     )
                   ),
                   mainPanel(
+                    downloadLink(
+                      outputId   = "mut_survival_downloads",
+                      label = "Download",
+                      class = "download_css"
+                      # width = "10%"
+                    ),
                     tags$h3("基因突变与长期生存的关系"),
                     tags$div(
                       id =
