@@ -7,7 +7,8 @@ if(! suppressWarnings(require(tidyverse))){print("can not load package tidyverse
 
 
 
-initial_data <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/initialData")
+#initial_data <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/initialData")
+initial_data <- jsonlite::fromJSON("http://192.168.164.82:9196/aml/dataAnalysis/initialData")
 
 
 

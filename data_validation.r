@@ -74,7 +74,8 @@ validateDataFramePatient<- function(patientdf){
 
 # 主接口，获得patient接口 -------------------
 requestAndCleanDataframePatient<- function(){
-  patientdf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/patientData")
+  #patientdf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/patientData")
+  patientdf <- jsonlite::fromJSON("http://192.168.164.82:9196/aml/dataAnalysis/patientData")
   
   for(j in seq(1,nrow(patientdf))) {patientdf$birthday[j] <- convertOneCellCharacter2Date(patientdf$birthday[j])}
   for(j in seq(1,nrow(patientdf))) {patientdf$diagnosis_date[j] <- convertOneCellCharacter2Date(patientdf$diagnosis_date[j])}
@@ -216,7 +217,8 @@ validateDataFrameInitials<- function(initialdf){
 # 主接口，获得initial接口 -------------------
 requestAndCleanDataframeInitial<- function(){
   
-  initialdf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/initialData")
+  #initialdf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/initialData")
+  initialdf <- jsonlite::fromJSON("http://192.168.164.82:9196/aml/dataAnalysis/initialData")
   
   tryCatch({
     # select data
@@ -312,7 +314,8 @@ requestAndCleanDataframeInitial<- function(){
 getJsonPeroid<-function(){
   # http://localhost:9196/amltest/dataAnalysis/archiveData
   #Peroiddf <- jsonlite::fromJSON("http://localhost:9196/amltest/dataAnalysis/periodData")
-  Peroiddf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/periodData")
+  #Peroiddf <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/periodData")
+  Peroiddf <- jsonlite::fromJSON("http://192.168.164.82:9196/aml/dataAnalysis/periodData")
   return(Peroiddf)
 }
 
@@ -509,7 +512,8 @@ convertOneCellCharacter2Date <- function(s){
 requestAndCleanDataframeArchive <- function(){
   
   #archiveJson <- jsonlite::fromJSON("http://localhost:9196/amltest/dataAnalysis/archiveData")
-  archiveJson <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/archiveData")
+  #archiveJson <- jsonlite::fromJSON("http://bigd.big.ac.cn/amltest/dataAnalysis/archiveData")
+  archiveJson <- jsonlite::fromJSON("http://192.168.164.82:9196/aml/dataAnalysis/archiveData")
   
   archivedf <- archiveJson %>% 
               dplyr::select(patient_id,

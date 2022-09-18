@@ -214,7 +214,8 @@ reactive_long_outcome <- reactive({
     fitOSSH,
     data = subdat,
     pval = TRUE,
-    conf.int = TRUE,
+    conf.int = FALSE, ## 去掉confident intervial
+    # conf.int = TRUE,
     risk.table = TRUE,
     # Add risk table
     risk.table.col = "strata",
@@ -236,7 +237,8 @@ reactive_long_outcome <- reactive({
     fitEFSSH,
     data = subdat,
     pval = TRUE,
-    conf.int = TRUE,
+    conf.int = FALSE, ## 去掉confident intervial
+    # conf.int = TRUE,
     risk.table = TRUE,
     # Add risk table
     risk.table.col = "strata",
@@ -258,7 +260,8 @@ reactive_long_outcome <- reactive({
     fitEFSSH2,
     data = subdat,
     pval = TRUE,
-    conf.int = TRUE,
+    conf.int = FALSE, ## 去掉confident intervial
+    # conf.int = TRUE,
     risk.table = TRUE,
     # Add risk table
     risk.table.col = "strata",
@@ -285,7 +288,7 @@ reactive_long_outcome <- reactive({
       ## strata  = ,  # Tests will be stratified on this variable.
       rho = 0,
       # Power of the weight function used in the tests.
-      cencode = 0,
+      cencode = 0
       # value of fstatus variable which indicates the failure time is censored.
       ## subset = ,
       ## na.action = na.omit

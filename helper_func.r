@@ -313,7 +313,7 @@ genSurvPlotEachTreatCatetory2 <-
               listOfSurvfit[[t]],
               data = dat,
               pval = TRUE,
-              conf.int = TRUE,
+              # conf.int = FALSE,
               risk.table = T,
               # Add risk table
               risk.table.col = "strata",
@@ -343,7 +343,7 @@ genSurvPlotEachTreatCatetory2 <-
               listOfSurvfit[[t]],
               data = dat,
               pval = TRUE,
-              conf.int = TRUE,
+              # conf.int = FALSE,
               risk.table = T,
               # Add risk table
               risk.table.col = "strata",
@@ -373,7 +373,7 @@ genSurvPlotEachTreatCatetory2 <-
               listOfSurvfit[[t]],
               data = dat,
               pval = TRUE,
-              conf.int = TRUE,
+              # conf.int = FALSE,
               risk.table = TRUE,
               # Add risk table
               risk.table.col = "strata",
@@ -474,7 +474,7 @@ genSurvPlotEachTreatCatetory3 <-
               listOfSurvfit[[t]],
               data = dat,
               pval = TRUE,
-              conf.int = TRUE,
+              # conf.int = FALSE,
               risk.table = T,
               # Add risk table
               risk.table.col = "strata",
@@ -504,7 +504,7 @@ genSurvPlotEachTreatCatetory3 <-
               listOfSurvfit[[t]],
               data = dat,
               pval = TRUE,
-              conf.int = TRUE,
+              # conf.int = FALSE,
               risk.table = TRUE,
               # Add risk table
               risk.table.col = "strata",
@@ -939,12 +939,13 @@ genInductionPlot <- function(subdat, VarName, treatGroup, mypalette) {
 genSurvInputSlider<-function(ID,SliderID,label,data){
   sharp_ID = paste0("#",ID)
   removeUI(
-    selector = paste0( sharp_ID, " >*"),
+    selector = paste0( sharp_ID, " > *"),
     multiple = T
   )
+  
   insertUI(
     selector = sharp_ID,
-    where = "afterEnd",
+    where = "beforeEnd",
     ui = sliderInput(
       SliderID,
       label = label,

@@ -41,7 +41,7 @@ observe({
         "RR_C",
         "RR_D"
       ),
-      (selecteddata[, "Treatment"] %>% unique() %>% as.character())
+      (selecteddata[,"Treatment"] %>% unique() %>% as.character())
     )
 
   output$dynamic_groups_table <- renderUI({

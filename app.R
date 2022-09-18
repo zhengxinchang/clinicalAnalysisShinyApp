@@ -69,7 +69,7 @@ htmlTable::setHtmlTableTheme(css.rgroup = "")
 # supress all warnings information
 options(warn = -1)
 #setwd("E:/projects/git_repo/aml/src/main/webapp/shinyApp")
-setwd("/srv/shiny-server/chemo")
+setwd("/srv/shiny-server/chemo2")
 source("./data_prepar.r", encoding = "utf-8")
 source("./helper_func.r", encoding = "utf-8")
 source("./constant_vars.r", encoding = "utf-8")
