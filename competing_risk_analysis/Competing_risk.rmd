@@ -1,0 +1,138 @@
+---
+title: "Competing Risk Survival Analysis"
+output: html_notebook
+---
+
+https://rpubs.com/kaz_yos/cmprsk2
+
+## load packages
+
+```{r}
+library(survminer)
+library(survival)
+library(cmprsk)
+setwd("E:/projects/git_repo/aml_database_analysis_shinyapp/competing_risk_analysis")
+```
+
+## prepare data
+
+```{r}
+bmt <- read.csv("./bmt.csv",sep=";")
+
+bmt$dis <- factor(bmt$dis , levels = c(0,1),labels = c("ALL","AML"))
+bmt$status <- factor(bmt$status ,levels = c(0,1,2),labels = c("Censored","Motality","Relapse"))
+
+summary(bmt)
+
+
+```
+
+addmargin() 给矩阵计算和
+xtabs,计算两个变量的交叉表
+
+```{r}
+addmargins(xtabs(data = bmt, ~ dis + status)) %>% htmlTable::htmlTable()
+```
+
+
+## Event Free Survival(EFS)
+
+这个方法聚焦于不出现的事件。经常用来衡量癌症研究中感兴趣的事件的预后，不死亡和不复发是关键事件。在KM图中，这个方法估计的是没有经历任何终点事件的人的占比。在这个数据集中，AML患者有更好的生存率。画出1-EFS的倒数的KM曲线，则解释为患者经历了某个结局事件（死亡，复发）的比例。
+
+
+```{r}
+resEfsByDis <- survfit(
+  formula = Surv(ftime,status!="Censored") ~dis,
+  data = bmt,
+  type = "kaplan-meier",
+  error = "greenwood",
+  conf.type= "log-log"
+)
+summary(resEfsByDis) 
+
+```
+
+作图
+
+EFS倒数作为复发
+
+```{r}
+
+    inverse_EFS <- ggsurvplot(resEfsByDis,data=bmt,
+                          pval = "pval = 0.12", conf.int = F,
+                          risk.table = TRUE, # Add risk table
+                          risk.table.col = "strata", # Change risk table color by groups
+                          linetype = "strata", # Change line type by groups
+                          surv.median.line = "hv", # Specify median survival
+                          ggtheme = theme_bw(), # Change ggplot2 theme
+                          palette = "jco",fun="event",
+                          legend.title="Cumulative Incidence of Relapse",
+                          legend.labs=c("AML","ALL"))
+    inverse_EFS
+```
+
+
+# 使用competing risk method 计算CIR
+
+```{r}
+## Calculate the grouped cumulative incidence functions (CIF)
+resCumIncByDis <- cuminc(ftime   = bmt$ftime,  # failure time variable
+                         fstatus = bmt$status,  # variable with distinct codes for different causes of failure
+                         group   = bmt$dis,  # estimates will calculated within groups
+                         ## strata  = ,  # Tests will be stratified on this variable.
+                         rho     = 0, # Power of the weight function used in the tests.
+                         cencode = "Censored", # value of fstatus variable which indicates the failure time is censored.
+                         ## subset = ,
+                         ## na.action = na.omit
+                         )
+
+## CIF and the variance of point estimates
+a<-timepoints(resCumIncByDis, times = c(0,5,10,15,20,30,40,50,60)) 
+resCumIncByDis$Tests
+a$est %>%htmlTable::htmlTable()
+a$var %>%htmlTable::htmlTable()
+
+```
+
+## 作图
+
+```{r}
+
+    # competingRisk <- ggsurvplot(resCumIncByDis,data=bmt,
+    #                       pval = "pval = 0.12", conf.int = TRUE,
+    #                       risk.table = TRUE, # Add risk table
+    #                       risk.table.col = "strata", # Change risk table color by groups
+    #                       linetype = "strata", # Change line type by groups
+    #                       surv.median.line = "hv", # Specify median survival
+    #                       ggtheme = theme_bw(), # Change ggplot2 theme
+    #                       palette = "jco",fun="event",
+    #                       legend.title="Cumulative Incidence of Relapse",
+    #                       legend.labs=c("AML","ALL"))
+(        competingRisk <-ggcompetingrisks(
+                    resCumIncByDis,
+                    gnames = NULL,
+                    gsep = " ",
+                    multiple_panels = F,
+                    ggtheme = theme_bw(),
+                    pval = "xdf",
+                    conf.int = F,
+
+                    surv.median.line = "hv", # Specify median survival
+                    palette = "jco",
+                    legend.title=list(color="Event",linetype="Group")
+                    
+                    )
+
+)
+```
+
+
+测试htmltable
+
+```{r}
+
+
+rbind(c("", "Column spanners", NA),
+                         c("", "Cgroup 1", "Cgroup 2"))
+```
+

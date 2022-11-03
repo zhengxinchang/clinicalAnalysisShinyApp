@@ -1,0 +1,65 @@
+---
+title: "Clinical Papers Investigation for AML database"
+output: html_notebook
+---
+
+
+分析已已发表的文献中的分析内容，为后续AML数据库分析模块的构建提供理论参考。
+
+```{r}
+
+library(tidyverse)
+library(cowplot)
+library(readxl)
+```
+ 
+读取数据
+
+```{r}
+
+dat<- read_excel("./amlClinicalFigureAndTables.xlsx",sheet = 1)
+
+for(n in names(dat)[6:ncol(dat)]){
+  dat[is.na(dat[,n]),n]<-0
+}
+
+dat_features<- dat[,names(dat)[6:ncol(dat)]]
+
+dat_meta <- dat[,1:5]
+
+```
+
+
+
+作图
+
+```{r}
+colSums(dat_features) %>% as.data.frame() %>% rename("count"=".") %>% rownames_to_column(var="TableAndFigures")%>% arrange(desc(count)) %>% ggplot() +
+  geom_bar(aes(x=reorder(TableAndFigures,-count),y=count,fill=TableAndFigures),color="black",stat = "identity") + theme_bw() +guides(fill=FALSE) + theme(axis.text.x = element_text(angle=45,hjust = 1)) +xlab(label = "Tables and Figures")
+
+```
+
+
+```{r}
+rowSums(dat_features) %>% as.data.frame() %>% rename("count"=".") %>% rownames_to_column(var="Papers") %>% ggplot() +
+  geom_histogram(aes(x=count),color="black") + theme_bw() +guides(fill=FALSE) + theme(axis.text.x = element_text(angle=45,hjust = 1)) +xlab(label = "Tables and Figures/Paper")
+```
+
+
+
+
+```{r}
+
+dat_meta %>% dplyr::select(`Journal/Book`) %>% group_by(`Journal/Book`) %>% summarise(count=n()) %>%  ggplot() +
+  geom_bar(aes(x=reorder(`Journal/Book`,-count),y=count,fill=`Journal/Book`),color="black",stat = "identity") + theme_bw() +guides(fill=FALSE) + theme(axis.text.x = element_text(angle=45,hjust = 1)) +xlab(label = "Journals")
+
+```
+
+
+```{r}
+
+dat %>% dplyr::select(Table1,Publication_Year) %>% group_by(Publication_Year) %>% summarise(count=sum(Table1)) %>% ggplot() +
+  geom_line(aes(x=Publication_Year,y=count)) +ylim(c(1,30)) +theme_bw() 
+  
+```
+
